@@ -1,0 +1,8 @@
+Sensirion in Waspmote
+
+  
+   Ground is first pin on right column
+   Power is switched on/off by setting DIGITAL5 (third pin on right column) high/low
+
+  Clock is DIGITAL 8 (first pin on left column)
+  Data is  DIGITAL 6 (second pin on left column)
