@@ -1,6 +1,7 @@
 void send_data_by_air(){
+  XBee.setMode(XBEE_ON);
   xbee802.ON();
-  delay(1000);
+  delay(XBEE_OFF_ON_WAIT);
   value_temperature *=100.0;
   value_humidity *=100.0;
   temperature=(int) value_temperature;
@@ -20,8 +21,9 @@ void send_data_by_air(){
   xbee802.sendXBee(paq_sent);
   free(paq_sent); 
   paq_sent=NULL;
-  delay(2000); 
+  delay(XBEE_OFF_ON_WAIT); 
   xbee802.OFF();
+  XBee.setMode(XBEE_OFF);
 }
 
 
