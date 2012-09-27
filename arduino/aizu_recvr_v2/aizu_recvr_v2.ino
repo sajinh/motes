@@ -1,6 +1,7 @@
 
 #include <SPI.h>
 #include <Ethernet.h>
+#include <EthernetUdp.h>
 #include <XBee.h>
 #include <Time.h>
 
@@ -19,19 +20,18 @@ byte dom_ns[] = {163,143,1,100};
 byte gateway[] = {163,143,166,1};
 byte netmask[] = {255,255,255,0};
 IPAddress server(163,143,166,120); 
-char srv_name[] = "enformtk.u-aizu.ac.jp";
-int srv_port = 8000;
-IPAddress ipx_server(163,143,166,120);
-char px_server[] = "enformtk.u-aizu.ac.jp";
-int px_port = 3128;
+char serverName[] = "enformtk.u-aizu.ac.jp";
+int serverPort = 8000;
+char proxyServer[] = "proxy1.ut.fks.ed.jp";
+int proxyPort = 8080;
 
-IPAddress timeServer(133, 243, 238, 163); // time.nist.gov NTP server
+
 time_t prevDisplay = 0; // when the digital clock was displayed
 
 String xbee_pkt="";
 String http_resp ="";
 byte resetCounter = 0;
-boolean http_resp_required = false;
+boolean http_resp_required = true;
 boolean debug = true;
 boolean dhcp_flag = true;
 
@@ -44,7 +44,6 @@ void setup(){
     Serial.println("connecting...");
   }
   begin_ethernet(); 
- // begin_timer();
 }
 
 void begin_ethernet(){
@@ -61,17 +60,16 @@ void begin_ethernet(){
 void loop() { 
   
   client.stop();
- // xbee.readPacket();
-//  if (xbee.getResponse().isAvailable()){
- //   receive_xbee_payload();
- //   send_by_ethernet();
- // }
- send_by_ethernet();
-  delay(3000);
+  //xbee.readPacket();
+  //if (xbee.getResponse().isAvailable()){
+  //  receive_xbee_payload();
+    send_by_ethernet();
+  //}
+  delay(5000);
 }
   
 void send_by_ethernet(){  
-  if (client.connect(px_server, px_port)) {
+  if (client.connect(proxyServer, proxyPort)) {
     put_http_data();
     if (debug) {Serial.println(http_resp);}
   } 
@@ -94,4 +92,6 @@ void print_dhcp_address(){
   }
   Serial.println();
 }
+
+
 

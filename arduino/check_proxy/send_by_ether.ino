@@ -1,23 +1,16 @@
 void put_http_data(){
-  //xbee_pkt +="&stn_id=";
-  //xbee_pkt +=STN_ID;
-  //xbee_pkt +="&date=";
-  //xbee_pkt += now();
-  //Serial.println(xbee_pkt);
   client.print("POST ");
-  client.print(srv_name);
-  client.print(":");
-  client.print(srv_port);
-  client.println("/feeds HTTP/1.1");
-  client.println("Host: enformtk.u-aizu.ac.jp");
+  //client.print(srv_name);
+  //client.print(":");
+  //client.print(srv_port);
+  client.println("/feeds HTTP/1.0");
+  //client.println("Host: enformtk.u-aizu.ac.jp");
   client.print("Content-Length: ");
   client.println("0");
-  //client.println(xbee_pkt.length());
   client.println("Content-Type: text/plain");
   client.println("Connection: close");
   client.println();
-  client.println();
-  //client.println(xbee_pkt);
+  //client.println();
   delay(500);
   resetCounter = 0;
   if (http_resp_required){
